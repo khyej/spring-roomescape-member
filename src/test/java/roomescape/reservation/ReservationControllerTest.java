@@ -24,11 +24,11 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
+import roomescape.common.PageResponse;
 import roomescape.exception.AlreadyInUseException;
 import roomescape.exception.ForbiddenException;
 import roomescape.exception.InvalidStateException;
 import roomescape.exception.NotFoundException;
-import roomescape.reservation.dto.PageReservationsResponse;
 import roomescape.reservation.dto.ReservationResponse;
 import roomescape.reservation.dto.ReservationsResponse;
 import roomescape.theme.dto.ThemeResponse;
@@ -50,7 +50,7 @@ class ReservationControllerTest {
     void 예약_조회() throws Exception {
         int page = 0;
         int size = 10;
-        given(reservationService.read(page, size)).willReturn(PageReservationsResponse.from(List.of(), 0, 0, false));
+        given(reservationService.read(page, size)).willReturn(PageResponse.of(List.of(), 0, 0, false));
 
         mockMvc.perform(get("/api/reservations"))
                 .andExpect(status().isOk());

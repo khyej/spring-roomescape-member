@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
-import roomescape.theme.dto.PageThemesResponse;
+import roomescape.common.PageResponse;
 import roomescape.theme.dto.ThemeResponse;
 import roomescape.theme.dto.ThemesResponse;
 
@@ -29,7 +29,7 @@ class ThemeControllerTest {
         int page = 0;
         int size = 10;
         given(themeService.read(page, size))
-                .willReturn(PageThemesResponse.from(List.of(
+                .willReturn(PageResponse.of(List.of(
                                 new ThemeResponse(1L, "공포의 방",
                                         "심장 약한 사람은 들어오지 마세요.",
                                         "https://example.com/themes/horror.jpg"),
@@ -41,11 +41,11 @@ class ThemeControllerTest {
 
         mockMvc.perform(get("/api/themes"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.themes.length()").value(2))
-                .andExpect(jsonPath("$.themes[0].id").value(1))
-                .andExpect(jsonPath("$.themes[0].name").value("공포의 방"))
-                .andExpect(jsonPath("$.themes[1].id").value(2))
-                .andExpect(jsonPath("$.themes[1].name").value("미스터리 추리"));
+                .andExpect(jsonPath("$.items.length()").value(2))
+                .andExpect(jsonPath("$.items[0].id").value(1))
+                .andExpect(jsonPath("$.items[0].name").value("공포의 방"))
+                .andExpect(jsonPath("$.items[1].id").value(2))
+                .andExpect(jsonPath("$.items[1].name").value("미스터리 추리"));
     }
 
     @Test

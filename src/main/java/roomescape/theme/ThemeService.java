@@ -5,9 +5,9 @@ import java.time.LocalDate;
 import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import roomescape.common.PageResponse;
 import roomescape.exception.AlreadyInUseException;
 import roomescape.reservation.repository.ReservationRepository;
-import roomescape.theme.dto.PageThemesResponse;
 import roomescape.theme.dto.ThemeRequest;
 import roomescape.theme.dto.ThemeResponse;
 import roomescape.theme.dto.ThemesResponse;
@@ -42,7 +42,7 @@ public class ThemeService {
         return ThemeResponse.from(saved);
     }
 
-    public PageThemesResponse read(int page, int size) {
+    public PageResponse<ThemeResponse> read(int page, int size) {
         List<ThemeResponse> themesResponse = themeRepository.findAll(page, size + 1).stream()
                 .map(ThemeResponse::from)
                 .toList();
@@ -52,7 +52,7 @@ public class ThemeService {
             themesResponse = themesResponse.subList(0, size);
         }
 
-        return PageThemesResponse.from(themesResponse, page, themesResponse.size(), hasNext);
+        return PageResponse.of(themesResponse, page, themesResponse.size(), hasNext);
     }
 
     @Transactional

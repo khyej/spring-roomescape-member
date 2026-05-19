@@ -67,20 +67,20 @@ window.api = (function () {
     return {
         listThemes: async (page = 0, size = 10) => {
             const data = await getJson(`/api/themes?page=${page}&size=${size}`);
-            return {items: data.themes || [], hasNext: data.hasNext ?? false};
+            return {items: data.items || [], hasNext: data.hasNext ?? false};
         },
         listAllThemes: () => fetchAllPages('/api/themes'),
         popularThemes: async () => {
             const data = await getJson('/api/themes/popular');
-            return data.themes || [];
+            return data.items || [];
         },
         listReservations: async (userName, page = 0, size = 10) => {
             if (userName) {
                 const data = await getJson('/api/reservations?user_name=' + encodeURIComponent(userName));
-                return {items: data.reservations || [], hasNext: false};
+                return {items: data.items || [], hasNext: false};
             }
             const data = await getJson(`/api/reservations?page=${page}&size=${size}`);
-            return {items: data.reservations || [], hasNext: data.hasNext ?? false};
+            return {items: data.items || [], hasNext: data.hasNext ?? false};
         },
 
         createReservation: (payload) => postJson('/api/reservations', payload),

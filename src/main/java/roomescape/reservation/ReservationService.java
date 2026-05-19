@@ -5,9 +5,9 @@ import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import roomescape.common.PageResponse;
 import roomescape.exception.AlreadyInUseException;
 import roomescape.exception.NotFoundException;
-import roomescape.reservation.dto.PageReservationsResponse;
 import roomescape.reservation.dto.ReservationRequest;
 import roomescape.reservation.dto.ReservationResponse;
 import roomescape.reservation.dto.ReservationsResponse;
@@ -54,7 +54,7 @@ public class ReservationService {
         return ReservationResponse.from(saved);
     }
 
-    public PageReservationsResponse read(int page, int size) {
+    public PageResponse<ReservationResponse> read(int page, int size) {
         List<ReservationResponse> reservationsResponse = reservationRepository.findAll(page, size + 1).stream()
                 .map(ReservationResponse::from)
                 .toList();
@@ -64,7 +64,7 @@ public class ReservationService {
             reservationsResponse = reservationsResponse.subList(0, size);
         }
 
-        return PageReservationsResponse.from(reservationsResponse, page, reservationsResponse.size(), hasNext);
+        return PageResponse.of(reservationsResponse, page, reservationsResponse.size(), hasNext);
     }
 
     public ReservationsResponse readByUserName(String userName) {
