@@ -13,8 +13,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.HashMap;
@@ -111,11 +109,10 @@ class ReservationControllerTest {
 
     @Test
     void 예약_삭제() throws Exception {
-        String decodeUserName = URLDecoder.decode("동키", StandardCharsets.UTF_8);
         willDoNothing().given(reservationService).delete(1L, "동키");
 
         mockMvc.perform(delete("/api/reservations/1")
-                        .header("User-Name", decodeUserName))
+                        .header("User-Name", "동키"))
                 .andExpect(status().isNoContent());
     }
 

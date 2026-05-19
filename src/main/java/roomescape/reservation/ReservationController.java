@@ -3,8 +3,6 @@ package roomescape.reservation;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
-import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -58,9 +56,7 @@ public class ReservationController {
             @RequestBody @Valid ReservationRequest reservationRequest,
             @RequestHeader("User-Name") String userName
     ) {
-        String decodeUserName = URLDecoder.decode(userName, StandardCharsets.UTF_8);
-        return ResponseEntity.status(HttpStatus.OK)
-                .body(reservationService.update(id, reservationRequest, decodeUserName));
+        return ResponseEntity.status(HttpStatus.OK).body(reservationService.update(id, reservationRequest, userName));
     }
 
     @DeleteMapping("/{id}")
@@ -68,8 +64,7 @@ public class ReservationController {
             @PathVariable long id,
             @RequestHeader("User-Name") String userName
     ) {
-        String decodeUserName = URLDecoder.decode(userName, StandardCharsets.UTF_8);
-        reservationService.delete(id, decodeUserName);
+        reservationService.delete(id, userName);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }
