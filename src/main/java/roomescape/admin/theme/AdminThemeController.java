@@ -1,4 +1,4 @@
-package roomescape.admin;
+package roomescape.admin.theme;
 
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;

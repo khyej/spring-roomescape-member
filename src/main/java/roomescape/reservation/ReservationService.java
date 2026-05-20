@@ -101,15 +101,6 @@ public class ReservationService {
     }
 
     @Transactional
-    public void deleteByAdmin(Long id) {
-        Reservation reservation = getReservation(id);
-
-        reservation.validateNotPast(LocalDateTime.now(clock));
-
-        reservationRepository.deleteById(id);
-    }
-
-    @Transactional
     public void delete(Long id, String userName) {
         Reservation reservation = getReservation(id);
 

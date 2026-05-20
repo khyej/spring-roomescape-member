@@ -87,17 +87,6 @@ class ReservationServiceTest {
     }
 
     @Test
-    void 관리자_이미_지난_예약_삭제시_400() {
-        mockTime(LocalDate.of(2026, 5, 14), LocalTime.of(12, 0));
-
-        Reservation reservation = new Reservation(1L, "동키", theme, LocalDate.of(2026, 5, 10), reservationTime);
-        given(reservationRepository.findById(1L)).willReturn(Optional.of(reservation));
-
-        assertThatThrownBy(() -> reservationService.deleteByAdmin(1L))
-                .isInstanceOf(InvalidStateException.class);
-    }
-
-    @Test
     void 다른_사용자_예약_삭제시_403() {
         Reservation reservation = new Reservation(1L, "동키", theme, LocalDate.of(2026, 5, 20), reservationTime);
         given(reservationRepository.findById(1L)).willReturn(Optional.of(reservation));

@@ -1,4 +1,4 @@
-package roomescape.admin;
+package roomescape.admin.time;
 
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
