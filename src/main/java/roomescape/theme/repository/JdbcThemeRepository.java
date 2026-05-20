@@ -9,6 +9,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
+import roomescape.common.Page;
 import roomescape.theme.Theme;
 
 @Repository
@@ -43,10 +44,18 @@ public class JdbcThemeRepository implements ThemeRepository {
     }
 
     @Override
-    public List<Theme> findAll(int page, int size) {
-        String sql = "SELECT id, name, description, thumbnail FROM theme LIMIT ? OFFSET  ?";
+    public Page<Theme> findAll(int page, int size) {
+        String sql = "SELECT id, name, description, thumbnail FROM theme LIMIT ? OFFSET ?";
+
         int offset = page * size;
-        return jdbcTemplate.query(sql, themeRowMapper, size, offset);
+        List<Theme> themes = jdbcTemplate.query(sql, themeRowMapper, size + 1, offset);
+
+        boolean hasNext = themes.size() > size;
+        if (hasNext) {
+            themes = themes.subList(0, size);
+        }
+
+        return new Page<>(themes, page, size, hasNext);
     }
 
     @Override

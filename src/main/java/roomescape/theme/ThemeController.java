@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import roomescape.common.PageResponse;
+import roomescape.common.Page;
 import roomescape.theme.dto.ThemeResponse;
 import roomescape.theme.dto.ThemesResponse;
 
@@ -23,7 +23,7 @@ public class ThemeController {
     }
 
     @GetMapping
-    public ResponseEntity<PageResponse<ThemeResponse>> read(
+    public ResponseEntity<Page<ThemeResponse>> read(
             @RequestParam(defaultValue = "0") @Min(0) int page,
             @RequestParam(defaultValue = "10") @Max(100) int size
     ) {

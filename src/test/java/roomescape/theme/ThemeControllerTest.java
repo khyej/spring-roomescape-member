@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
-import roomescape.common.PageResponse;
+import roomescape.common.Page;
 import roomescape.theme.dto.ThemeResponse;
 import roomescape.theme.dto.ThemesResponse;
 
@@ -29,7 +29,7 @@ class ThemeControllerTest {
         int page = 0;
         int size = 10;
         given(themeService.read(page, size))
-                .willReturn(PageResponse.of(List.of(
+                .willReturn(new Page<>(List.of(
                                 new ThemeResponse(1L, "공포의 방",
                                         "심장 약한 사람은 들어오지 마세요.",
                                         "https://example.com/themes/horror.jpg"),

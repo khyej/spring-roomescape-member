@@ -1,0 +1,11 @@
+package roomescape.common;
+
+import java.util.List;
+
+public record Page<T>(
+        List<T> items,
+        int page,
+        int size,
+        boolean hasNext
+) {
+}

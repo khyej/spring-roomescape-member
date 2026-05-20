@@ -10,6 +10,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
+import roomescape.common.Page;
 import roomescape.reservation.Reservation;
 import roomescape.theme.Theme;
 import roomescape.time.ReservationTime;
@@ -58,7 +59,7 @@ public class JdbcReservationRepository implements ReservationRepository {
     }
 
     @Override
-    public List<Reservation> findAll(int page, int size) {
+    public Page<Reservation> findAll(int page, int size) {
         String sql = """
                 SELECT r.id, r.user_name, r.date, t.id as time_id, t.start_at, c.id as theme_id,
                 c.name as theme_name, c.description as theme_description, c.thumbnail as theme_thumbnail
@@ -66,7 +67,14 @@ public class JdbcReservationRepository implements ReservationRepository {
                 LIMIT ? OFFSET ? 
                 """;
         int offset = page * size;
-        return jdbcTemplate.query(sql, reservationRowMapper, size, offset);
+        List<Reservation> reservations = jdbcTemplate.query(sql, reservationRowMapper, size + 1, offset);
+
+        boolean hasNext = reservations.size() > size;
+        if (hasNext) {
+            reservations = reservations.subList(0, size);
+        }
+
+        return new Page<>(reservations, page, size, hasNext);
     }
 
     @Override

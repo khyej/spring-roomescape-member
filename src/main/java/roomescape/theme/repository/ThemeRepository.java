@@ -3,13 +3,14 @@ package roomescape.theme.repository;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import roomescape.common.Page;
 import roomescape.theme.Theme;
 
 public interface ThemeRepository {
 
     Theme save(Theme theme);
 
-    List<Theme> findAll(int page, int size);
+    Page<Theme> findAll(int page, int size);
 
     Optional<Theme> findById(long id);
 
