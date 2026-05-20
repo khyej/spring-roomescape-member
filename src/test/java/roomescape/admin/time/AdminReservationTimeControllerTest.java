@@ -1,4 +1,4 @@
-package roomescape.admin;
+package roomescape.admin.time;
 
 import static org.mockito.BDDMockito.willDoNothing;
 import static org.mockito.BDDMockito.willThrow;
@@ -15,7 +15,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
-import roomescape.admin.time.AdminReservationTimeController;
 import roomescape.exception.AlreadyInUseException;
 import roomescape.time.ReservationTimeService;
 

@@ -1,4 +1,4 @@
-package roomescape.admin;
+package roomescape.admin.reservation;
 
 import static org.mockito.BDDMockito.willThrow;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
@@ -9,8 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
-import roomescape.admin.reservation.AdminReservationController;
-import roomescape.admin.reservation.AdminReservationService;
 import roomescape.exception.InvalidStateException;
 import roomescape.exception.NotFoundException;
 
