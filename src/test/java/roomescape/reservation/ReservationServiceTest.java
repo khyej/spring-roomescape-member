@@ -97,6 +97,8 @@ class ReservationServiceTest {
 
     @Test
     void 다른_사용자_예약_변경시_403() {
+        mockTime(LocalDate.of(2026, 5, 14), LocalTime.of(12, 0));
+
         Reservation reservation = new Reservation(1L, "동키", theme, LocalDate.of(2026, 5, 20), reservationTime);
         given(reservationRepository.findById(1L)).willReturn(Optional.of(reservation));
 
