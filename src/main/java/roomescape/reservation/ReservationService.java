@@ -73,10 +73,12 @@ public class ReservationService {
 
     @Transactional
     public ReservationResponse update(long id, ReservationRequest reservationRequest, String userName) {
+
+        LocalDateTime now = LocalDateTime.now(clock);
         Reservation reservation = getReservation(id);
 
         reservation.validateOwner(userName);
-        reservation.validateNotPast(LocalDateTime.now(clock));
+        reservation.validateNotPast(now);
 
         ReservationTime reservationTime = getReservationTime(reservationRequest);
         Theme theme = getTheme(reservationRequest);
@@ -89,7 +91,7 @@ public class ReservationService {
                 reservationTime
         );
 
-        updateReservation.validateNotPast(LocalDateTime.now(clock));
+        updateReservation.validateNotPast(now);
         validateDuplicate(updateReservation);
 
         reservationRepository.update(updateReservation);
