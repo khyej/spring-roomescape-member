@@ -72,12 +72,12 @@ window.api = (function () {
         listAllThemes: () => fetchAllPages('/api/themes'),
         popularThemes: async () => {
             const data = await getJson('/api/themes/popular');
-            return data.items || [];
+            return data.themes || [];
         },
         listReservations: async (userName, page = 0, size = 10) => {
             if (userName) {
                 const data = await getJson('/api/reservations?user_name=' + encodeURIComponent(userName));
-                return {items: data.items || [], hasNext: false};
+                return {items: data.reservations || [], hasNext: false};
             }
             const data = await getJson(`/api/reservations?page=${page}&size=${size}`);
             return {items: data.items || [], hasNext: data.hasNext ?? false};
